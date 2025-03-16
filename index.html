@@ -480,96 +480,196 @@
         }
 
         @media (max-width: 768px) {
-            .timeline {
-                display: none;
+            body {
+                padding: 10px;
             }
+
+            .container {
+                padding: 15px;
+                margin: 0;
+                border-radius: 15px;
+            }
+
+            h1 {
+                font-size: 1.8em;
+                margin-bottom: 20px;
+            }
+
+            h2 {
+                font-size: 1.4em;
+            }
+
+            .quote {
+                font-size: 1.2em;
+                padding: 20px;
+                margin: 20px 0;
+            }
+
+            .achievement {
+                padding: 15px;
+                margin-bottom: 15px;
+            }
+
+            .achievement p {
+                font-size: 0.9em;
+                line-height: 1.4;
+                margin: 10px 0;
+            }
+
             .header-controls {
                 top: 10px;
                 right: 10px;
+                gap: 5px;
+            }
+
+            .control-button {
+                padding: 8px;
+                font-size: 0.9em;
+            }
+
+            .search-container {
+                top: 60px;
+                right: 10px;
+                width: calc(100% - 20px);
+            }
+
+            .search-input {
+                width: 100%;
+                box-sizing: border-box;
+            }
+
+            .share-modal {
+                width: 95%;
+                padding: 20px;
+                max-height: 90vh;
+                overflow-y: auto;
+            }
+
+            .share-modal h3 {
+                font-size: 1.4em;
+                margin-bottom: 20px;
+            }
+
+            .share-tabs {
+                margin-bottom: 20px;
+            }
+
+            .share-tab {
+                padding: 8px 15px;
+                font-size: 0.9em;
+            }
+
+            .qr-code {
+                width: 160px;
+                height: 160px;
+            }
+
+            .qr-code img {
+                width: 140px;
+                height: 140px;
+            }
+
+            .copy-link {
+                padding: 10px;
+            }
+
+            .copy-button {
+                padding: 6px 12px;
+                font-size: 0.9em;
+            }
+
+            .close-modal {
+                top: 10px;
+                right: 10px;
+                width: 30px;
+                height: 30px;
+                font-size: 20px;
+            }
+
+            .share-success {
+                font-size: 0.9em;
+                padding: 8px 15px;
+            }
+
+            .share-button {
+                padding: 10px 20px;
+                font-size: 0.9em;
+            }
+
+            .info-section {
+                margin-bottom: 30px;
+            }
+
+            /* 优化暗色模式在移动端的显示 */
+            .dark-mode .container {
+                background-color: rgba(20, 20, 20, 0.98);
+            }
+
+            .dark-mode .achievement {
+                background: linear-gradient(to right, #1a1a1a, #222);
+            }
+
+            /* 优化动画效果在移动端的表现 */
+            .floating {
+                animation: float 2s ease-in-out infinite;
+            }
+
+            @keyframes float {
+                0% { transform: translateY(0px); }
+                50% { transform: translateY(-3px); }
+                100% { transform: translateY(0px); }
+            }
+
+            /* 优化滚动体验 */
+            .container {
+                -webkit-overflow-scrolling: touch;
+            }
+
+            /* 优化点击区域 */
+            .achievement p,
+            .share-button,
+            .control-button,
+            .copy-button,
+            .close-modal {
+                min-height: 44px;
+                display: flex;
+                align-items: center;
+            }
+
+            /* 优化间距 */
+            .info-section + .info-section {
+                margin-top: 20px;
+            }
+
+            /* 优化分享按钮位置 */
+            .share-buttons {
+                margin-top: 30px;
+                margin-bottom: 20px;
+            }
+
+            /* 优化下载按钮 */
+            .download-button {
+                width: 100%;
+                padding: 12px;
+                margin: 15px 0;
+                font-size: 1em;
             }
         }
 
-        .dark-mode .share-modal {
-            background: rgba(20, 20, 20, 0.95);
-            border: 2px solid #ff69b4;
-        }
+        /* 针对超小屏幕的额外优化 */
+        @media (max-width: 320px) {
+            h1 {
+                font-size: 1.6em;
+            }
 
-        .dark-mode .share-modal h3 {
-            color: #ff69b4;
-            text-shadow: 0 0 10px #ff69b4;
-        }
+            .achievement p {
+                font-size: 0.85em;
+            }
 
-        .dark-mode .share-tabs {
-            border-bottom: 2px solid #ff69b4;
-        }
-
-        .dark-mode .share-tab {
-            color: #ff69b4;
-            opacity: 0.6;
-        }
-
-        .dark-mode .share-tab.active {
-            color: #ff69b4;
-            opacity: 1;
-        }
-
-        .dark-mode .share-tab.active::after {
-            background: #ff69b4;
-            box-shadow: 0 0 10px #ff69b4;
-        }
-
-        .dark-mode .qr-code {
-            background: #2a2a2a;
-            border: 2px solid #ff69b4;
-            box-shadow: 0 0 15px rgba(255,105,180,0.2);
-        }
-
-        .dark-mode .copy-link {
-            background: #2a2a2a;
-            border: 1px solid #ff69b4;
-        }
-
-        .dark-mode .link-input {
-            color: #ff69b4;
-        }
-
-        .dark-mode .copy-button {
-            background: #ff69b4;
-            color: white;
-        }
-
-        .dark-mode .copy-button:hover {
-            background: #ff1493;
-        }
-
-        .dark-mode .close-modal {
-            color: #ff69b4;
-        }
-
-        .dark-mode .close-modal:hover {
-            background: #2a2a2a;
-            color: #ff1493;
-        }
-
-        .dark-mode .download-button {
-            background: #ff69b4 !important;
-            color: white !important;
-            border: none !important;
-            box-shadow: 0 0 15px rgba(255,105,180,0.3) !important;
-        }
-
-        .dark-mode .download-button:hover {
-            background: #ff1493 !important;
-            box-shadow: 0 0 20px rgba(255,105,180,0.4) !important;
-        }
-
-        .dark-mode #qrcode p {
-            color: #ff69b4 !important;
-        }
-
-        .dark-mode .share-success {
-            background: rgba(255,105,180,0.9);
-            color: white;
+            .quote {
+                font-size: 1.1em;
+                padding: 15px;
+            }
         }
     </style>
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
