@@ -474,6 +474,148 @@
             animation: fadeInUp 0.3s ease;
         }
 
+        /* 密码验证挑战模态框 */
+        .password-modal {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0.8);
+            background: rgba(255, 255, 255, 0.95);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+            z-index: 3000;
+            width: 300px;
+            opacity: 0;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+            text-align: center;
+        }
+
+        .password-modal.active {
+            transform: translate(-50%, -50%) scale(1);
+            opacity: 1;
+        }
+
+        .password-modal h3 {
+            color: #1e3799;
+            font-size: 1.5em;
+            margin-bottom: 15px;
+        }
+
+        .password-modal p {
+            color: #555;
+            margin-bottom: 20px;
+            font-size: 0.95em;
+            line-height: 1.5;
+        }
+
+        .password-hint {
+            background: #f8f9fa;
+            padding: 10px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            color: #666;
+            font-style: italic;
+            font-size: 0.9em;
+        }
+
+        .password-input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            font-size: 16px;
+            box-sizing: border-box;
+        }
+
+        .password-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .password-button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
+        }
+
+        .password-submit {
+            background: #1e3799;
+            color: white;
+        }
+
+        .password-submit:hover {
+            background: #4a69bd;
+        }
+
+        .password-cancel {
+            background: #f5f5f5;
+            color: #333;
+        }
+
+        .password-cancel:hover {
+            background: #e0e0e0;
+        }
+
+        .password-error {
+            color: #e74c3c;
+            margin-top: 10px;
+            font-size: 14px;
+            display: none;
+        }
+
+        .dark-mode .password-modal {
+            background: rgba(20, 20, 20, 0.95);
+            border: 2px solid #ff69b4;
+        }
+
+        .dark-mode .password-modal h3 {
+            color: #ff69b4;
+            text-shadow: 0 0 10px #ff69b4;
+        }
+
+        .dark-mode .password-modal p {
+            color: #ddd;
+        }
+
+        .dark-mode .password-hint {
+            background: rgba(30, 30, 30, 0.8);
+            color: #ff69b4;
+            border: 1px solid rgba(255, 105, 180, 0.3);
+        }
+
+        .dark-mode .password-input {
+            background-color: rgba(30, 30, 30, 0.8);
+            color: #ff69b4;
+            border: 1px solid #ff69b4;
+        }
+
+        .dark-mode .password-submit {
+            background: #ff69b4;
+            color: white;
+        }
+
+        .dark-mode .password-submit:hover {
+            background: #ff1493;
+        }
+
+        .dark-mode .password-cancel {
+            background: #333;
+            color: #ddd;
+            border: 1px solid #666;
+        }
+
+        .dark-mode .password-cancel:hover {
+            background: #444;
+        }
+
         @keyframes fadeInUp {
             from { transform: translate(-50%, 20px); opacity: 0; }
             to { transform: translate(-50%, 0); opacity: 1; }
@@ -733,6 +875,24 @@
         </div>
     </div>
 
+    <!-- 密码验证挑战模态框 -->
+    <div class="password-modal" id="passwordModal">
+        <h3>深夜模式解密挑战</h3>
+        <p>探索雷永新的成就，寻找解锁深夜秘密的答案</p>
+        
+        <div class="password-hint">
+            提示: 这位企业家几岁白手创业，打造出市值超50亿的科技企业帝国？
+        </div>
+        
+        <input type="text" class="password-input" id="passwordInput" placeholder="请输入解锁密码...">
+        <div class="password-error" id="passwordError">解密失败，请再次尝试</div>
+        
+        <div class="password-buttons">
+            <button class="password-button password-cancel" id="passwordCancel">取消</button>
+            <button class="password-button password-submit" id="passwordSubmit">解锁</button>
+        </div>
+    </div>
+
     <div class="share-success" id="shareSuccess">链接已复制到剪贴板！</div>
 
     <div class="container">
@@ -961,12 +1121,76 @@
             });
         }
 
-        darkModeToggle.addEventListener('click', () => {
+        // 密码验证功能
+        const passwordModal = document.getElementById('passwordModal');
+        const passwordInput = document.getElementById('passwordInput');
+        const passwordSubmit = document.getElementById('passwordSubmit');
+        const passwordCancel = document.getElementById('passwordCancel');
+        const passwordError = document.getElementById('passwordError');
+        const modalOverlay = document.getElementById('modalOverlay');
+
+        function showPasswordModal() {
+            modalOverlay.style.display = 'block';
+            passwordModal.style.display = 'block';
+            setTimeout(() => {
+                passwordModal.classList.add('active');
+                passwordInput.focus();
+            }, 10);
+        }
+
+        function hidePasswordModal() {
+            passwordModal.classList.remove('active');
+            setTimeout(() => {
+                passwordModal.style.display = 'none';
+                modalOverlay.style.display = 'none';
+                passwordInput.value = '';
+                passwordError.style.display = 'none';
+            }, 300);
+        }
+
+        function verifyPassword() {
+            // 正确答案: 从网站内容中获取 - "26岁白手创业"
+            const correctAnswer = "26";
+            const userInput = passwordInput.value.trim();
+            
+            // 允许多种正确格式
+            if (userInput === correctAnswer || 
+                userInput === "26岁" || 
+                userInput.toLowerCase() === "二十六" || 
+                userInput.toLowerCase() === "二十六岁") {
+                hidePasswordModal();
+                toggleDarkMode();
+            } else {
+                passwordError.style.display = 'block';
+                passwordInput.value = '';
+                passwordInput.focus();
+            }
+        }
+
+        function toggleDarkMode() {
             const isDarkMode = document.body.classList.toggle('dark-mode');
             const icon = darkModeToggle.querySelector('i');
             icon.classList.toggle('fa-moon');
             icon.classList.toggle('fa-sun');
             updateContent(isDarkMode);
+        }
+
+        darkModeToggle.addEventListener('click', (e) => {
+            // 如果已经是深夜模式，直接切换回普通模式
+            if (document.body.classList.contains('dark-mode')) {
+                toggleDarkMode();
+            } else {
+                // 否则显示解密挑战
+                showPasswordModal();
+            }
+        });
+
+        passwordSubmit.addEventListener('click', verifyPassword);
+        passwordCancel.addEventListener('click', hidePasswordModal);
+        passwordInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                verifyPassword();
+            }
         });
 
         // 搜索功能
@@ -1019,7 +1243,6 @@
         // 分享功能
         const shareButton = document.getElementById('shareButton');
         const shareModal = document.getElementById('shareModal');
-        const modalOverlay = document.getElementById('modalOverlay');
         const closeModal = document.getElementById('closeModal');
 
         shareButton.addEventListener('click', () => {
