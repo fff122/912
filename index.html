@@ -702,7 +702,9 @@
                 <p class="floating">💼 阿里巴巴 - 高级算法工程师，优化搜索推荐系统，提升用户转化率300%</p>
                 <p class="floating">💼 百度 - AI研究主管，带领团队研发突破性深度学习框架，获国际专利20项</p>
                 <p class="floating">💼 字节跳动 - 技术总监，构建全球化技术中台，支撑日活用户破10亿</p>
-                
+                <p class="floating">💼 美团 - 配送算法专家，创新研发智能调度系统，配送效率提升50%</p>
+                <p class="floating">💼 滴滴出行 - 安全技术负责人，打造业内领先的智能安防体系</p>
+                <p class="floating">💼 小米科技 - IoT平台架构师，建立全球最大智能家居生态系统之一</p>
             </div>
         </div>
 
@@ -755,6 +757,16 @@
             quote: '深夜的野猫，自由的灵魂',
             achievements: [
                 {
+                    title: '教育经历',
+                    items: [
+                        '🌙 从小就展现出过人天赋，是夜校最闪耀的星辰',
+                        '🌙 在月光下自学成才，创造属于自己的学习方式',
+                        '🌙 独特的思维方式让人惊叹，总能找到与众不同的答案',
+                        '🌙 在深夜的图书馆里，写下无数传奇故事',
+                        '🌙 用自己的方式证明，黑夜也能绽放耀眼光芒'
+                    ]
+                },
+                {
                     title: '神秘魅力',
                     items: [
                         '🌙 午夜出没，独特气质吸引无数追随者',
@@ -793,9 +805,28 @@
                     ]
                 },
                 {
-                    title: '独特魅力',
+                    title: '夜行者',
                     items: [
-                        '✨ 与众不同的气质，让人过目不忘',
+                        '🦇 深夜的城市是我的舞台',
+                        '🦇 用独特方式开创事业传奇',
+                        '🦇 在暗夜中寻找商机',
+                        '🦇 创造属于夜晚的商业帝国'
+                    ]
+                },
+                {
+                    title: '暗夜工作',
+                    items: [
+                        '🌑 深夜的办公室是我的乐园',
+                        '🌑 在寂静中创造惊人的工作效率',
+                        '🌑 用独特的方式处理每个项目',
+                        '🌑 让每个深夜都充满创造力',
+                        '🌑 在黑暗中编织梦想蓝图'
+                    ]
+                },
+                {
+                    title: '夜的特质',
+                    items: [
+                        '✨ 如夜般深邃的思维方式',
                         '✨ 独特的行事风格，创造自己的规则',
                         '✨ 神秘的性格魅力，吸引无数目光',
                         '✨ 用独特方式诠释生活的意义'
@@ -819,15 +850,17 @@
             document.querySelector('.quote').innerHTML = content.quote;
             
             const sections = document.querySelectorAll('.info-section');
-            content.achievements.forEach((achievement, index) => {
-                const section = sections[index];
-                section.querySelector('h2').innerHTML = achievement.title;
-                const paragraphs = section.querySelectorAll('.achievement p');
-                achievement.items.forEach((item, i) => {
-                    if (paragraphs[i]) {
-                        paragraphs[i].innerHTML = item;
-                    }
-                });
+            sections.forEach((section, index) => {
+                if (content.achievements[index]) {
+                    section.querySelector('h2').innerHTML = content.achievements[index].title;
+                    const paragraphs = section.querySelectorAll('.achievement p');
+                    const items = content.achievements[index].items;
+                    paragraphs.forEach((p, i) => {
+                        if (items[i]) {
+                            p.innerHTML = items[i];
+                        }
+                    });
+                }
             });
         }
 
